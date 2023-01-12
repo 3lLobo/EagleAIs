@@ -36,4 +36,4 @@ print(heat_img)
 
 plt.imshow(heat_img, cmap="cool", interpolation="nearest")
 plt.show()
-plt.savefig("semanticSegmentationTest.png")
+plt.savefig("res/semanticSegmentationTest.png")
