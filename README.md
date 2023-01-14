@@ -39,8 +39,12 @@ https://smartathon.hackerearth.com/
 
 ## Remarks
 
-Playing with image preprocessing techniques, reveals that reducing the exposure of the image improves the prediction quality of both the semantic segmentation and depth estimation models.
-This might be due to the more drastic darkening of the road compared buildings, peripherals and sky. 
+Playing with image pre-processing techniques, reveals that reducing the exposure of the image improves the prediction quality of both the semantic segmentation and depth estimation models.
+This might be due to the more drastic darkening of the road compared buildings, peripherals and sky or due to the notorious over-exposure of the dessert scenery. 
+
+![0024contrast](https://user-images.githubusercontent.com/25290565/212501829-e3120acf-197f-4d74-86ec-99c5cfade208.jpg)
+
+![0024exposure](https://user-images.githubusercontent.com/25290565/212501808-7c5d57a7-c97b-404b-9957-de41c7a2f5a8.jpg)
 
 
 ### CUDA
