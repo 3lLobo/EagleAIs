@@ -2,6 +2,8 @@
 
 SDAIA hackathon project.
 
+![0024contrast](https://user-images.githubusercontent.com/25290565/212572319-4b272e76-283a-4f6d-afc4-479b9ccd1ba5.jpg)
+
 ## How to run
 
 Install dependencies:
@@ -15,13 +17,13 @@ Load the data into `data/` folder.
 Semantic segmentation:
 
 ```bash
-poetry run python3 src/sem_seg.py
+poetry run python3 src/sem_seg_dpt.py
 ```
 
 Depth estimation:
 
 ```bash
-poetry run python3 src/depth_est.py
+poetry run python3 src/depth_est_dpt.py
 ```
 
 ## Dataset
@@ -57,3 +59,5 @@ Congrats, your are squared away with CUDA!
 ## Resources
 
 [pretrained Models](https://huggingface.co/)
+
+[DPT paper](https://arxiv.org/pdf/2103.13413.pdf)
