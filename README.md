@@ -32,8 +32,8 @@ https://smartathon.hackerearth.com/
 
 ## Approach
 
-1. Semantic Segmentation with NVIDIA VIT and DPThybrid. ✅
-2. Image depth estimation with MiDas and DTPlarge - Tesla was the first one to replaced Lidar with monocular depth estimation! ✅
+1. Semantic Segmentation with NVIDIA VIT and [DPTlarge-ade(https://huggingface.co/Intel/dpt-large-ade)]. ✅
+2. Image depth estimation with MiDas and [DTPlarge](https://huggingface.co/Intel/dpt-large) - Tesla was the first one to replaced Lidar with monocular depth estimation! ✅
 3. LabelStudio for manual annotation. ✅
 4. Pothole detection with YOLOv7 - fine-tuned on manually annotated dataset. 
 5. Classic CV: Canny edge detection, Hough transform, Laplacian of Gaussian.
