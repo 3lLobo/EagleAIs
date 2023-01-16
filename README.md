@@ -32,12 +32,46 @@ https://smartathon.hackerearth.com/
 
 ## Approach
 
-1. Semantic Segmentation with NVIDIA VIT
-2. Image depth estimation with Monodepth2 - This is how Tesla replaced Lidar!
-3. Pothole detection with YOLOv7 - fine-tuned on manually annotated dataset.
-4. Hold-up! How-to manual annotation pipeline?
+1. Semantic Segmentation with NVIDIA VIT and [DPTlarge-ade(https://huggingface.co/Intel/dpt-large-ade)]. ✅
+2. Image depth estimation with MiDas and [DTPlarge](https://huggingface.co/Intel/dpt-large) - Tesla was the first one to replaced Lidar with monocular depth estimation! ✅
+3. LabelStudio for manual annotation. ✅
+4. Pothole detection with YOLOv7 - fine-tuned on manually annotated dataset. 
 5. Classic CV: Canny edge detection, Hough transform, Laplacian of Gaussian.
-6. Video overlay with segmentation mask, depth indicator, pothole count and severity score.
+6. Fancy Video:
+   1. Overlay with segmentation. ✅
+   2. Depth indicator with distance measure.
+   3. Increasing pothole count.
+   4. Pothole bounding box and severity score.
+   5. Street damage barometer.
+7. Demo Video.
+8. Wirte-up in paper style.
+9. Submittt!
+
+
+## Label Studio
+
+Manual labeling was done in [Label Studio](https://labelstud.io/). The 'docker-compose.yml' file  is adopted from the [labelImg repo](https://github.com/heartexlabs/label-studio).
+To start label studio, create the required folderstructure with `g+wr` permissions:
+- data
+  - import
+  - export
+  - media
+
+Then run:
+```bash
+cd labelImg && docker-compose up
+```
+
+Open the browser at `localhost:8080`, set up the project and import the images for labeling.
+
+~30 images were annotated for 3 classes:
+ - pothole
+ - streetdamage
+ - sand on road
+
+![image](https://user-images.githubusercontent.com/25290565/212654523-63fdfbd9-76be-4f1f-9fe1-3bb3316d56eb.png)
+
+The annotations are exported in COCO format.
 
 ## Remarks
 
