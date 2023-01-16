@@ -1,13 +1,15 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,dotenv,opencv
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,dotenv,opencv
 
-res/*.png
-res/*.mp4
+res/**/*.png
+res/**/*.jpg
+res/**/*.mp4
 data/*
 !data/.txt
 .code/
 ### dotenv ###
 .env
+!.placeholder
 
 ### OpenCV ###
 #OpenCV for Mac and Linux
