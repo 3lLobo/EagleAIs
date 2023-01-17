@@ -146,3 +146,116 @@ def plot_comparison(
         plt.savefig(save_path, bbox_inches="tight")
 
     return figure
+
+
+# Calibration values for depth estimation to distance
+PX1 = 230
+PX2 = 169
+DST1 = 100
+DST2 = 200  # cm
+
+
+def get_interpolation(
+    pxvalue1: int, dist1: int, pxvalue2: int, dist2: int, x: int
+) -> int:
+    """Get distance for pixel value x.
+    Given two points and their relative distance to the camera,
+    interpolate the distance for point x.
+    Pixel values are are 0 for the closest point and 255 for the farthest point, which is infinity.
+
+    Args:
+        pxvalue1 (int): pixel value of first point
+        dist1 (int): distance to first point
+        pxvalue2 (int): pixel value of second point
+        dist2 (int): distance to second point
+        x (int): pixel value to interpolate.
+
+    Returns:
+        int: distance to pixel value x
+    """
+    # Avoid division by zero
+    if dist1 == dist2:
+        return dist1
+    # logarithmic interpolation
+    result = np.exp(
+        np.log(dist1)
+        + (np.log(dist2) - np.log(dist1)) * (x - pxvalue1) / (pxvalue2 - pxvalue1)
+    )
+    return int(result)
+
+
+def norm_depth(depth: np.ndarray) -> np.ndarray:
+    """Normalize depth image to range [0, 255].
+
+    Args:
+        depth (np.ndarray): depth image
+
+    Returns:
+        np.ndarray: normalized depth image
+    """
+    depth = depth - depth.min()
+    depth = depth / depth.max()
+    depth = depth * 255
+
+    return depth.astype(np.uint8)
+
+
+def get_distance(depth_map: np.ndarray, x: int, y: int) -> int:
+    """Get distance from depth map.
+
+    Args:
+        depth_map (np.ndarray): normalized depth map
+        x (int): x coordinate
+        y (int): y coordinate
+
+    Returns:
+        int: distance to point (x, y)
+    """
+    pxvalue = depth_map[y, x]
+    return get_interpolation(PX1, DST1, PX2, DST2, pxvalue)
+
+
+def get_area(
+    depth_est: np.ndarray,
+    x_max: int,
+    y_max: int,
+    x_min: int,
+    y_min: int,
+) -> int:
+    """Get the area of circle.
+    The values are the vertical max and min values of the bounding box.
+    Area is in cm^2.
+
+    Args:
+        depth_est (np.ndarray): raw depth map
+        x_max (int): x coordinate of max value
+        y_max (int): y coordinate of max value
+        x_min (int): x coordinate of min value
+        y_min (int): y coordinate of min value
+
+    Returns:
+        int: area of circle
+    """
+    # Normalize depth map
+    depth_norm = norm_depth(depth_est)
+    # Get distance to max value
+    dist_max = get_distance(depth_norm, x_max, y_max)
+    # Get distance to min value
+    dist_min = get_distance(depth_norm, x_min, y_min)
+    # Get radius
+    radius = (dist_max + dist_min) / 2
+    # Get area of circle
+    area = np.pi * radius**2
+    return int(area)
+
+
+if __name__ == "__main__":
+    # Test the interpolation function
+
+    x = 1
+    pxvalue1 = 250
+    dst1 = 100
+    pxvalue2 = 230
+    dst2 = 200
+    dst_x = get_distance(pxvalue1, dst1, pxvalue2, dst2, x)
+    print(dst_x)
