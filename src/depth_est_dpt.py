@@ -9,6 +9,7 @@ HUB_NAME = "Intel/dpt-large"
 
 feature_extractor = DPTFeatureExtractor.from_pretrained(HUB_NAME)
 model = DPTForDepthEstimation.from_pretrained(HUB_NAME)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def dpt_depth(image: np.ndarray) -> np.ndarray:
@@ -22,18 +23,20 @@ def dpt_depth(image: np.ndarray) -> np.ndarray:
     """
 
     # prepare image for the model
-    inputs = feature_extractor(images=image, return_tensors="pt")
-    with torch.no_grad():
-        outputs = model(**inputs)
-        predicted_depth = outputs.predicted_depth
+    with torch.cuda.device(0):
+        inputs = feature_extractor(images=image, return_tensors="pt").to(device)
+        gpumodel = model.to(device)
+        with torch.no_grad():
+            outputs = gpumodel(**inputs)
+            predicted_depth = outputs.predicted_depth
 
-    # interpolate to original size
-    prediction = torch.nn.functional.interpolate(
-        predicted_depth.unsqueeze(1),
-        size=image.shape[:2],
-        mode="bicubic",
-        align_corners=False,
-    )
+        # interpolate to original size
+        prediction = torch.nn.functional.interpolate(
+            predicted_depth.unsqueeze(1),
+            size=image.shape[:2],
+            mode="bicubic",
+            align_corners=False,
+        )
     output = prediction.squeeze().cpu().numpy()
     # formatted = (output * 255 / np.max(output)).astype("uint8")
 

@@ -13,6 +13,7 @@ import torch
 feature_extractor = DPTFeatureExtractor.from_pretrained("Intel/dpt-large-ade")
 model = DPTForSemanticSegmentation.from_pretrained("Intel/dpt-large-ade")
 image_processor = DPTImageProcessor.from_pretrained("Intel/dpt-large-ade")
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
 def dpt_semantic(image: np.ndarray) -> np.ndarray:
@@ -24,18 +25,20 @@ def dpt_semantic(image: np.ndarray) -> np.ndarray:
     Returns:
         np.ndarray: segmented image
     """
-    inputs = feature_extractor(images=image, return_tensors="pt")
-    output = model(**inputs)
-    # interpolate to original size
-    prediction = torch.nn.functional.interpolate(
-        # pp_image[0].unsqueeze(0).unsqueeze(0),
-        output.logits,
-        size=image.shape[:2],
-        mode="bicubic",
-        align_corners=False,
-    )
-    output.logits = prediction
-    pp_image = image_processor.post_process_semantic_segmentation(output)
+    with torch.cuda.device(0):
+        inputs = feature_extractor(images=image, return_tensors="pt").to(device)
+        gpumodel = model.to(device)
+        output = gpumodel(**inputs)
+        # interpolate to original size
+        prediction = torch.nn.functional.interpolate(
+            # pp_image[0].unsqueeze(0).unsqueeze(0),
+            output.logits,
+            size=image.shape[:2],
+            mode="bicubic",
+            align_corners=False,
+        )
+        output.logits = prediction
+        pp_image = image_processor.post_process_semantic_segmentation(output)
     seg_img = pp_image[0].cpu().detach().numpy()
 
     return seg_img
