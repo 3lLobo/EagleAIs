@@ -42,7 +42,7 @@ services:
       - JSON_LOG=1
     #      - LOG_LEVEL=DEBUG
     volumes:
-      - ../data/png:/label-studio/data:rw
+      - ./labelstudio:/label-studio/data:rw
     command: label-studio-uwsgi
 
   db:
