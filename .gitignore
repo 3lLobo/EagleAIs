@@ -10,6 +10,7 @@ data/*
 ### dotenv ###
 .env
 !.placeholder
+runs/*
 
 ### OpenCV ###
 #OpenCV for Mac and Linux

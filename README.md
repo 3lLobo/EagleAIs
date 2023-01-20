@@ -35,7 +35,7 @@ https://smartathon.hackerearth.com/
 1. Semantic Segmentation with NVIDIA VIT and [DPTlarge-ade(https://huggingface.co/Intel/dpt-large-ade)]. ✅
 2. Image depth estimation with MiDas and [DTPlarge](https://huggingface.co/Intel/dpt-large) - Tesla was the first one to replaced Lidar with monocular depth estimation! ✅
 3. LabelStudio for manual annotation. ✅
-4. Pothole detection with YOLOv7 - fine-tuned on manually annotated dataset. 
+4. Pothole detection with YOLOv8 - fine-tuned on manually annotated dataset.  ✅
 5. Classic CV: Canny edge detection, Hough transform, Laplacian of Gaussian.
 6. Fancy Video:
    1. Overlay with segmentation. ✅
@@ -72,6 +72,14 @@ Open the browser at `localhost:8080`, set up the project and import the images f
 ![image](https://user-images.githubusercontent.com/25290565/212654523-63fdfbd9-76be-4f1f-9fe1-3bb3316d56eb.png)
 
 The annotations are exported in COCO format.
+
+
+## Fine-tuning YOLOv8
+
+Follow these [instructions](https://github.com/ultralytics/yolov5/wiki/Train-Custom-Data) to save your labeled data and train a custom model.
+
+We use the [YOLOv8](https://github.com/ultralytics/ultralytics) model.
+
 
 ## Remarks
 
