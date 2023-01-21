@@ -97,7 +97,7 @@ def semantic_overlay(
     # Apply colormap
     heat_img = plt.cm.get_cmap(cmap)(heat_img)
     # Apply alpha
-    heat_img[:, :, 3] = alpha
+    # heat_img[:, :, 3] = alpha
     # Convert to numpy array
     heat_img = np.array(heat_img * 255, dtype=np.uint8)
     # Overlay heatmap on image

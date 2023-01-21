@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 import cv2
 import os
 
-from src.depth_est_dpt import dpt_depth
-from src.utils.image_utils import norm_depth, invert_depth
-from src.canny_edge import canny_edge
-from utils.distorted_img import undistort
+from depth_est_dpt import dpt_depth
+from utils.image_utils import norm_depth, invert_depth
+from canny_edge import canny_edge
+from utils.distorted_img import un_distort
 
 device = o3d.core.Device("cuda:0")
 dtype = o3d.core.float32
