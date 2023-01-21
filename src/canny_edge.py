@@ -19,7 +19,7 @@ def canny_edge(img: np.ndarray, low_threshold: int, high_threshold: int) -> Imag
         Image: Image with edges detected.
     """
     # Gaussian blur
-    edges = cv2.GaussianBlur(edges, (3, 3), 0)
+    edges = cv2.GaussianBlur(img, (3, 3), 0)
     # Dilate
     kernel = np.ones((3, 3), np.uint8)
     edges = cv2.dilate(edges, kernel, iterations=1)

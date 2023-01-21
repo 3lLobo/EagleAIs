@@ -249,6 +249,18 @@ def get_area(
     return int(area)
 
 
+def invert_depth(depth: np.ndarray) -> np.ndarray:
+    """Invert depth image.
+
+    Args:
+        depth (np.ndarray): depth image
+
+    Returns:
+        np.ndarray: inverted depth image
+    """
+    return 255 - depth
+
+
 if __name__ == "__main__":
     # Test the interpolation function
 
