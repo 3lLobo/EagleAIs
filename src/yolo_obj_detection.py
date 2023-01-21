@@ -32,4 +32,5 @@ def yolo_inference(
     """
     model = YOLO(model_path)
     results = model.predict(image_path, save=save)
+    results
     return results

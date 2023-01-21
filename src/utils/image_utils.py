@@ -97,7 +97,7 @@ def semantic_overlay(
     # Apply colormap
     heat_img = plt.cm.get_cmap(cmap)(heat_img)
     # Apply alpha
-    heat_img[:, :, 3] = alpha
+    # heat_img[:, :, 3] = alpha
     # Convert to numpy array
     heat_img = np.array(heat_img * 255, dtype=np.uint8)
     # Overlay heatmap on image
@@ -247,6 +247,18 @@ def get_area(
     # Get area of circle
     area = np.pi * radius**2
     return int(area)
+
+
+def invert_depth(depth: np.ndarray) -> np.ndarray:
+    """Invert depth image.
+
+    Args:
+        depth (np.ndarray): depth image
+
+    Returns:
+        np.ndarray: inverted depth image
+    """
+    return 255 - depth
 
 
 if __name__ == "__main__":
