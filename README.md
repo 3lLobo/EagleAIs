@@ -1,8 +1,35 @@
-# Eagle Eyez
+# Eagle AI
+![banner](https://user-images.githubusercontent.com/25290565/213936713-b867c032-54f2-4316-a568-5a9490252420.png)
+
 
 SDAIA hackathon project.
 
-![0024contrast](https://user-images.githubusercontent.com/25290565/212572319-4b272e76-283a-4f6d-afc4-479b9ccd1ba5.jpg)
+[Demo Video](https://youtu.be/WpQN7lC9WMw)
+
+[Demo notebook]()
+
+## Project Description
+
+Eagle AIs is modular, scalable  and a cutting-edge solution for the automated detection, localization and mitigation of street damage, yielding in a modern road network with automated sustenance workflow.
+
+Engineered and prototyped by a team of young PhD candidates, the presented solution synergizes the power of Deep Learning, Cloud-computing and augmented-reality.
+
+We solve the challenge of detection, localization and severity estimation of road-damage, provide exact geo-coordinates and 3D-reconstruction and eliminate the need for patrolling and specialized vehicles.
+
+Data can be provided through a mobile-phone camera by ordinary citizens. While the geo-coordinates and time-stamp give an exact reference, the images get processed in batches on a cloud-environment. From a single image, we are able to detect different kinds of street damage, estimate the size and severity; moreover generate a complete 3D-reconstruction of the scene for on-site inspection with augmented-reality. 
+Besides the standard detection of potholes, we decided to increase fidelity by expanding the detection capabilities with 2 additional classes, longitudinal road-damage and sand-accumulation.
+While potholes proposing the most prominent risk to vehicle and driver require immediate attention, smaller and often expanded road damage such as cracks and water puddles are categorized with lower priority, yet shall be targets of pre-emptive care.
+Finally we decided to include sand-accumulation as a separate class since it hinders visibility and could potentially cover severe damage, therefore shall be depper investigated for appropriate action.
+The severity of the damage is estimated by combining a Laplacian-filter, a classical and reputable computer vision technique with 3D reconstruction for depth-estimation.
+In combination with the GPS coordinates from the phone we provide a modular severity heatmap in a panoptic birds-eye view, combinable with popular map providers such as GoogleMaps. This is intended to optimize the coordination and logistics of repair-missions.
+Project Eagle AIs is scalable, low-cost and highly performant.
+
+## Screenshots
+
+
+![obj_detection](https://user-images.githubusercontent.com/25290565/213936717-3d35064d-551f-477a-be47-4d6f5fd41d63.png)
+![segmented_overlay](https://user-images.githubusercontent.com/25290565/213936722-4b510bb2-0983-4751-b9ac-ac451b297f67.png)
+![augmented_reality](https://user-images.githubusercontent.com/25290565/213936726-57e1a11a-c45c-4e69-a80e-ae3f0d651d5e.png)
 
 ## How to run
 

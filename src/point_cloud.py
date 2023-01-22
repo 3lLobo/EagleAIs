@@ -5,9 +5,8 @@ import cv2
 import os
 
 from depth_est_dpt import dpt_depth
-from utils.image_utils import norm_depth, invert_depth
+from utils.image_utils import norm_depth
 from canny_edge import canny_edge
-from utils.distorted_img import un_distort
 
 device = o3d.core.Device("cuda:0")
 dtype = o3d.core.float32
@@ -309,6 +308,7 @@ def draw_odometry_cpu(
     source_rgbd_image: o3d.geometry.RGBDImage,
     target_rgbd_image: o3d.geometry.RGBDImage,
     save_name: str = None,
+    scrnshot_name: str = None,
 ):
     """Draw the odometry.
 
@@ -317,6 +317,7 @@ def draw_odometry_cpu(
         source_rgbd (o3d.geometry.RGBDImage): Source RGBD image.
         target_rgbd (o3d.geometry.RGBDImage): Target RGBD image.
         save_name (str, optional): Save name. Defaults to None.
+        scrnshot_name (str, optional): Screen shot path. Defaults to None.
     """
     option = o3d.pipelines.odometry.OdometryOption()
     odo_init = np.identity(4)
@@ -358,7 +359,13 @@ def draw_odometry_cpu(
             source_rgbd_image, pinhole_camera_intrinsic
         )
         source_pcd_color_term.transform(trans_color_term)
-        o3d.visualization.draw_geometries([target_pcd, source_pcd_color_term])
+        if scrnshot_name is None:
+            o3d.visualization.draw_geometries([target_pcd, source_pcd_color_term])
+        if scrnshot_name:
+            vis_scrnshot(
+                [target_pcd, source_pcd_color_term],
+                f"./o3d/scrn/colorterm_{scrnshot_name}.png",
+            )
         if save_name:
             o3d.io.write_point_cloud(
                 f"./o3d/pcd_colorterm_{save_name}.ply",
@@ -373,7 +380,13 @@ def draw_odometry_cpu(
             source_rgbd_image, pinhole_camera_intrinsic
         )
         source_pcd_hybrid_term.transform(trans_hybrid_term)
-        o3d.visualization.draw_geometries([target_pcd, source_pcd_hybrid_term])
+        if scrnshot_name is None:
+            o3d.visualization.draw_geometries([target_pcd, source_pcd_hybrid_term])
+        if scrnshot_name:
+            vis_scrnshot(
+                [target_pcd, source_pcd_hybrid_term],
+                f"./o3d/scrn/odometry_{scrnshot_name}.png",
+            )
         if save_name:
             o3d.io.write_point_cloud(
                 f"./o3d/pcd_hybridterm_{save_name}.ply",
@@ -386,6 +399,25 @@ def draw_odometry_cpu(
             target_pcd,
             print_progress=True,
         )
+
+
+def vis_scrnshot(object: list, save_name: str = None):
+    """Visualize and save the object.
+
+    Args:
+        object (list): Object to visualize.
+        save_name (str, optional): Save name. Defaults to None.
+    """
+    vis = o3d.visualization.Visualizer()
+    vis.create_window(
+        visible=False
+    )  # works for me with False, on some systems needs to be true
+    for obj in object:
+        vis.add_geometry(obj)
+    vis.poll_events()
+    vis.update_renderer()
+    vis.capture_screen_image(save_name)
+    vis.destroy_window()
 
 
 if __name__ == "__main__":
