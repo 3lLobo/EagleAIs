@@ -214,6 +214,45 @@ def get_distance(depth_map: np.ndarray, x: int, y: int) -> int:
     pxvalue = depth_map[y, x]
     return get_interpolation(PX1, DST1, PX2, DST2, pxvalue)
 
+def get_horizon(depth_map: np.ndarray) -> int:
+    """Get horizon from depth map.
+
+    Args:
+        depth_map (np.ndarray): normalized depth map
+
+    Returns:
+        int: horizon
+    """
+    x_middle = depth_map.shape[1] // 2
+    max_mask = depth_map[x_middle-11: x_middle+11, :]
+    max_middle = max_mask.max()
+    max_middle_mask = max_mask == max_middle
+    y_max = 0
+    for x, y in np.argwhere(max_middle_mask):
+        if y > y_max:
+            y_max = y
+    return y_max
+
+
+def get_pixel(depth_map: np.ndarray, dist: int) -> int:
+    """Get pixel value from depth map.
+
+    Args:
+        depth_map (np.ndarray): normalized depth map
+        dist (int): distance
+
+    Returns:
+        int: pixel value
+    """
+    depth_max = depth_map.max()
+    dist_max = get_interpolation(PX1, DST1, PX2, DST2, depth_max)
+    if dist < dist_max:
+        return get_interpolation(DST1, PX1, DST2, PX2, dist)
+    
+    y_max = get_horizon(depth_map)
+
+    return y_max
+    
 
 def get_area(
     depth_est: np.ndarray,
