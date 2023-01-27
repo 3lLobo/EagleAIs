@@ -6,7 +6,7 @@ SDAIA hackathon project.
 
 [Demo Video](https://youtu.be/WpQN7lC9WMw)
 
-[Demo notebook]()
+[Demo notebook](https://colab.research.google.com/drive/1sStd48LbaQGcTVci-mNZb82ALznYPYt4)
 
 ## Project Description
 
